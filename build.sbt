@@ -1,4 +1,4 @@
-name := "SimpleMovieRecommendation"
+name := "Simple Recommendation"
 
 version := "1.0"
 
@@ -11,4 +11,4 @@ libraryDependencies ++= Seq(
   "joda-time" % "joda-time" % "2.9.9"
 )
 
-assemblyJarName in assembly := "recommender.jar"
+assemblyJarName in assembly := "simpleRecommender.jar"
