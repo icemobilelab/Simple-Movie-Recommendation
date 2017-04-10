@@ -1,4 +1,4 @@
-name := "Simple Movie Recommendation"
+name := "SimpleMovieRecommendation"
 
 version := "1.0"
 
