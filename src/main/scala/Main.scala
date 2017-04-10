@@ -30,10 +30,10 @@ object Main extends App with LazyLogging {
   }
 
   // Recommender
-  // val outputData = something...
-
+  val outputData = Recommender.recommend(inputData)
 
   // Write output
-  CsvParser.writeFile[DataRelation](outputFilename, inputData, d => s"${d.movieId},${d.userId},${d.rate}")
+  CsvParser.writeFile[DataRelation](outputFilename, outputData, d => s"${d.movieId},${d.userId},${d.rate}")
 
+  logger.info("Done")
 }
