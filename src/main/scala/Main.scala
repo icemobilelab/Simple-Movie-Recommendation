@@ -1,6 +1,7 @@
 import com.typesafe.scalalogging.LazyLogging
 import org.joda.time.DateTime
 
+import scala.collection.mutable.ListBuffer
 import scala.util.{Failure, Success}
 
 object Main extends App with LazyLogging {
@@ -21,19 +22,27 @@ object Main extends App with LazyLogging {
   logger.info(s"Input CSV is $inputFilename")
   logger.info(s"Output CSV is $outputFilename ")
 
-  val inputData = CsvParser.readFile[DataRelation](inputFilename, line => DataRelation(line(0).toInt, line(1).toInt, line(2).toDouble, DateTime.parse(line(4)))) match {
+  val users = ListBuffer[String]()
+  val header = ListBuffer[String]()
+
+  val matrix = ListBuffer[List[Double]]()
+
+  CsvParser.readFile(inputFilename, line => {
+    users += line(1)
+    matrix += (2 until line.length).map(i => line(i).toDouble).toList
+  }, firstLine => {
+    header ++= firstLine.slice(1, firstLine.length)
+  }) match {
     case Success(dataList) => dataList
-    case Failure(exception) => {
+    case Failure(exception) =>
       logger.error("Error: ", exception)
-      List[DataRelation]()
-    }
   }
 
   // Recommender
-  val outputData = Recommender.recommend(inputData)
+  val outputMatrix = Recommender.runRecommendations(matrix.toList)
 
   // Write output
-  CsvParser.writeFile[DataRelation](outputFilename, outputData, d => s"${d.productId},${d.userId},${d.rate}")
+  CsvParser.writeFile(outputFilename, outputMatrix, header.toList, users.toList)
 
   logger.info("Done")
 }

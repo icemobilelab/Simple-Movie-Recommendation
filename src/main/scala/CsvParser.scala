@@ -6,22 +6,29 @@ import scala.util.Try
 
 object CsvParser {
 
-  def readFile[T](inputFilename: String, parser: (Array[String]) => T ): Try[List[T]] = Try({
+  def readFile(inputFilename: String, parser: Array[String] => Unit, parserFirstLine: Array[String] => Unit): Try[Unit] = Try({
     val buffer = Source.fromFile(inputFilename)
-    val objectList = ListBuffer[T]()
+
+    var firstLine = true
 
     for (line <- buffer.getLines()) {
-      val values = line.split(",").map(_.trim)
-      objectList += parser(values)
+      val values = line.split(",").map(_.trim.replace("\"", ""))
+      if (firstLine) {
+        parserFirstLine(values)
+        firstLine = false
+      } else {
+        parser(values)
+      }
     }
     buffer.close()
-
-    objectList.toList
   })
 
-  def writeFile[T](outputFilename: String, objectList: List[T], parser: T => String): Unit = Try({
+  def writeFile(outputFilename: String, matrix: ListBuffer[ListBuffer[Double]], header: List[String], rowNames: List[String]): Unit = Try({
     val writer = new BufferedWriter(new FileWriter(outputFilename))
-    objectList.foreach(obj => writer.write(s"${parser(obj)}\n"))
+    writer.write( s"${header.mkString(",")}\n" )
+    for (i <- rowNames.indices) {
+      writer.write(s"${rowNames(i)},${matrix(i).mkString(",")}\n")
+    }
     writer.close()
   })
 
