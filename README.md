@@ -27,36 +27,31 @@ Examples of input and output files can be found in this project.
 
 ### Input
 
-The input must be a CSV file containing the columns:
- - userId: the ID of the user
- - productId: the ID of the product
- - userRate: The rate given by this user to this product (0 if not rated)
+The input must be a CSV file with header, where:
+ - The first column contains a timestamp*
+ - The second the user name (userId or user email)
+ - All the other columns contains the rating of the movies
  
 Example:
 ```
-1,15,7
-6,16,9
-0,10,8
-9,9,0
+"Timestamp","Username","Movie title A", "Movie title B"
+"2017/05/02 12:11:03 PM", "user1.email@gmail.com", "4","9"
+"2017/05/02 12:13:03 PM", "user2.email@gmail.com", "2","1"
+"2017/05/02 12:15:03 PM", "user3.email@gmail.com", "1","10"
 ```
+
+* Note: The first columns (timestamp) is not actually being used for anything in the recommender. Therefore, you can use it for an
+internal reference
 
 ### Output
 
-The generated output is going to be a CSV file, with the following columns:
- - userId: the ID of the user
- - productId: the ID of the product
- - userRate: The rate given by this user to this product (0 if not rated)
- - predictedRate: The predicted rate for this product to this user
- 
-The predict rate is how much every user would rate that specific product. Example:
+The generated output is going to be a CSV file, with the same columns from the input file (except the timestamp one):
 
+Example:
 ```
-1,15,7,8.57
-6,16,9,7.521
-0,10,8,9.512
-9,9,0,4.123
+"Username","Movie title A", "Movie title B"
+"user1.email@gmail.com", "5","7"
+"user2.email@gmail.com", "1",".5"
+"user3.email@gmail.com", "2","8"
 ```
-
-Then it's possible to filter, for every user, the products with zero rate and, later, rank
-them in descend order of predicted rate. This rank are the recommended movies.
 
