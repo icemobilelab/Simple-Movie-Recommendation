@@ -35,9 +35,9 @@ The input must be a CSV file with header, where:
 Example:
 ```
 "Timestamp","Username","Movie title A", "Movie title B"
-"2017/05/02 12:11:03 PM", "user1.email@gmail.com", "4","9"
-"2017/05/02 12:13:03 PM", "user2.email@gmail.com", "2","1"
-"2017/05/02 12:15:03 PM", "user3.email@gmail.com", "1","10"
+"2017/05/02 12:11:03 PM","user1","4","9"
+"2017/05/02 12:13:03 PM","user2","2","1"
+"2017/05/02 12:15:03 PM","user3","1","10"
 ```
 
 * Note: The first columns (timestamp) is not actually being used for anything in the recommender. Therefore, you can use it for an
@@ -50,8 +50,8 @@ The generated output is going to be a CSV file, with the same columns from the i
 Example:
 ```
 "Username","Movie title A", "Movie title B"
-"user1.email@gmail.com", "5","7"
-"user2.email@gmail.com", "1",".5"
-"user3.email@gmail.com", "2","8"
+"user1","5","7"
+"user2","1",".5"
+"user3","2","8"
 ```
 
