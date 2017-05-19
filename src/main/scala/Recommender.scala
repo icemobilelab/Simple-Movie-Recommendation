@@ -40,7 +40,7 @@ object Recommender {
     for (i <- simMatrix.indices) {
       val sim = simMatrix(i)(productId)
       val rate = rateMatrix(userId)(i)
-      numerator += sim*rate
+      numerator += sim * rate
       denominator += sim
     }
 
