@@ -1,9 +1,15 @@
 # Simple Movie Recommendation
 
-This project was created for the Open Day at Ice Mobile. Its goal is to show how a simple
+This scala project was created for the Open Day at Ice Mobile. Its goal is to show how a **simple**
 movie recommendation works by using the algorithm of Collaborative Filtering.
 
+**Python code with more examples inside the *python* folder.**
+
+**Presentations (in PDF) inside the *presentations* folder.**
+
 ## Compile
+
+Be sure to have the `sbt` (http://www.scala-sbt.org/) installed in your environment. 
 
 `sbt compile`
 
